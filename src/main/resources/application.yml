@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: tasks
+  data:
+    mongodb:
+      database: task
+      uri:
+      authentication-database:
+      repositories:
+        type: auto
+
+  #Validation
+  messages:
+    basename: validation-messages
+  # Kafka
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: true
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: br.com.matheuspadilha.tasks.model
+
+kafka:
+  task:
+    notification:
+      output: task-notification-v1
+    notification-group:
+      id: task-notification-v1-group
+
+
+# Via CEP
+via:
+  cep:
+    url: https://viacep.com.br/ws
