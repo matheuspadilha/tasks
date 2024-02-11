@@ -48,7 +48,7 @@ public class TaskConverter {
         return Optional.ofNullable(dto)
                 .map(item -> Task.builder()
                         .withTitle(item.getTitle())
-                        .withDscription(item.getTitle())
+                        .withDscription(item.getDescription())
                         .withPriority(item.getPriority())
                         .build()
                 )
