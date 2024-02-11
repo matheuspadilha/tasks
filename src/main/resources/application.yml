@@ -48,3 +48,11 @@ spring:
 via:
   cep:
     url: https://viacep.com.br/ws
+
+# Actuator exposure endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # exposure all
+#        include: [ "health", "info", "prometheus" ] # exposure only the necessary routes
