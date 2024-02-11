@@ -12,27 +12,36 @@ spring:
   #Validation
   messages:
     basename: validation-messages
+
   # Kafka
   cloud:
+    function:
+      definition: taskEventConsumer
     stream:
       kafka:
         binder:
           brokers: localhost:9092
           auto-create-topics: true
+      bindings:
+        taskEventProducer-out-0:
+          destination: task-notification-v1
+          contentType: application/json
+        taskEventConsumer-in-0:
+          destination: task-notification-v1
+          contentType: application/json
+          group: ${spring.application.name}
+          consumer:
+            partitioned: true
+
   kafka:
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.trusted.packages: br.com.matheuspadilha.tasks.model
     consumer:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: br.com.matheuspadilha.tasks.model
-
-kafka:
-  task:
-    notification:
-      output: task-notification-v1
-    notification-group:
-      id: task-notification-v1-group
 
 
 # Via CEP
