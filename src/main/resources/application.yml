@@ -34,15 +34,17 @@ spring:
             partitioned: true
 
   kafka:
+    bootstrap-servers: kafka:29092
     producer:
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
         spring.json.trusted.packages: br.com.matheuspadilha.tasks.model
     consumer:
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         spring.json.trusted.packages: br.com.matheuspadilha.tasks.model
-
 
 # Via CEP
 via:
@@ -56,3 +58,8 @@ management:
       exposure:
         include: '*' # exposure all
 #        include: [ "health", "info", "prometheus" ] # exposure only the necessary routes
+
+# Log
+logging:
+  level:
+    root: info
